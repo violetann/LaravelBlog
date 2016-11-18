@@ -4,10 +4,10 @@ A Laravel Blog application.
 
 Functions:
 
-	Welcome page recent Posts,
+	Welcome page with recent posts,
 	Contact us page with a email form,
-	Blog Page listing all posts with pagenation,
-	About us Page,
+	Blog page that listing all posts with pagination,
+	About us page,
 
 	Create Posts,
 	Edit Posts,
