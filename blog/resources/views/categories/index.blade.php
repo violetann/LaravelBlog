@@ -1,5 +1,5 @@
 @extends('main')
-@section('title', 'Categories')
+@section('title', 'All Categories')
 
 @section('content')
 
@@ -32,13 +32,13 @@
     <div class="well">
     {!! Form::open(['route'=>'categories.store','method'=>'POST']) !!}
     <h2>New Category</h2>
-    {{Form::label('name','Name:')}}
+    {{Form::label('name','Name:', ['class' => 'form-spacing-top'])}}
     {{Form::text('name',null,['class'=>'form-control'])}}
 
-    {{Form::label('description','Description:')}}
+    {{Form::label('description','Description:', ['class' => 'form-spacing-top'])}}
     {{Form::text('description',null,['class'=>'form-control'])}}
 
-    {{Form::label('icon','Icon:')}}
+    {{Form::label('icon','Icon:', ['class' => 'form-spacing-top'])}}
     {{Form::text('icon',null,['class'=>'form-control'])}}
 
     {{Form::submit('Create New Category',['class'=>'btn btn-primary btn-block btn-h1-spacing'])}}    

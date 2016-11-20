@@ -5,13 +5,14 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-10">
     <h1>{{  $tag->name  }} tag <small>({{  $tag->posts()->count()  }})</small></h1>
     </div>
-    <div class="col-md-2">
-        <a href="{{route('tags.edit',$tag->id)}}" class="btn btn-primary pull-right">Edit</a>
+    
+    <div class="col-md-1">
+        <a href="{{route('tags.edit',$tag->id)}}" class="btn btn-primary">Edit</a>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-1">
         {{ Form::open(['route' => ['tags.destroy', $tag->id], 'method' => 'DELETE']) }}
         {{ Form::submit('Delete', ['class' => 'btn btn-danger',]) }}
         {{ Form::close() }}

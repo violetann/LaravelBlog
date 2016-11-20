@@ -4,12 +4,14 @@
       @include('partials/_head')
   </head>
 
-  <body>
+  <body class="body">
       @include('partials/_nav')
 
     <div class="container">
-        @include('partials._messages')
-        @yield('content')
+        <div class="row row-offcanvas row-offcanvas-right">
+            @include('partials._messages')
+            @yield('content')
+        </div>  
         @include('partials/_footer')
     </div>  
 

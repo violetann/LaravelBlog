@@ -3,14 +3,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Post;
+use App\Category;
+
 use Session;
 use Mail;
 
 class PagesController extends Controller {
 
      public function getIndex(){
-         $posts = Post::orderBy('created_at','desc')->limit(4)->get();
-         return view('pages/welcome')->withPosts($posts);
+         $posts = Post::orderBy('created_at','desc')->limit(5)->get();
+         $categories = Category::all();
+         $categoryposts=array();
+
+         foreach($categories as $category){
+             $postscat = Post::where('category_id', $category->id)->orderBy('created_at','desc')->limit(5)->get();
+             $categoryposts[$category->id]=$postscat;
+        }
+         
+
+
+         return view('pages/welcome')->withPosts($posts)->withCategories($categories)->withCategoryposts($categoryposts);
      }
 
      public function getAbout(){

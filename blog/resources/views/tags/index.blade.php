@@ -1,5 +1,5 @@
 @extends('main')
-@section('title','Tags')
+@section('title','All Tags')
 
 @section('stylesheets')
     {!!    Html::style('css/parsley.css')    !!}
@@ -25,7 +25,7 @@
                     <td>{{ $tag->id }}</td>
                     <th>{{ $tag->name }}</th>
                     <td>
-                    <a href="{{route('tags.show',$tag->id)}}" class="btn btn-default pull-right">View Posts</a>
+                    <a href="{{route('tags.show',$tag->id)}}" class="btn btn-default pull-right">View</a>
 
                     </td>
                 </tr>

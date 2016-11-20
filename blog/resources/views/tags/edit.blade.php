@@ -16,17 +16,16 @@
 </div>
 
 <div class="col-md-4">
-    <div class="well">
         <dl class="dl-horizontal">
-            <dt>Post Count:</dt>
+            <dt>Posts using this tag:</dt>
             <dd>{{  $tag->posts()->count()  }}</dd>
         </dl>
         <hr>
         <center>
-            <a href="{{route('tags.show',$tag->id)}}" class="btn btn-info">View Tag</a>
-            <a href="{{route('tags.index')}}" class="btn btn-default">View  all Tags</a>
+            <a href="{{route('tags.show',$tag->id)}}" class="btn btn-secondary">View Tag</a>
+            <a href="{{route('tags.index')}}" class="btn btn-secondary">View  all Tags</a>
         </center>
-    </div>
+
 </div>
 @endsection
 

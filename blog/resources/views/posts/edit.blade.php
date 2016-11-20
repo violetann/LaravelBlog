@@ -6,10 +6,20 @@
     {!!    Html::style('css/select2.min.css')    !!}
 @endsection
 
+@section('headscripts')
+    {!!    Html::script('js/tinymce/tinymce.min.js')    !!}
+  <script>
+  tinymce.init({
+    selector: '#body',
+    plugins: 'table image hr media link autolink '
+  });
+  </script>    
+@endsection
+
 @section('content')
 
 <div class="row">
-		{!! Form::model($post, ['route' => ['posts.update', $post->id],'data-parsley-validate'=>'', 'method' => 'PUT']) !!}
+		{!! Form::model($post, ['route' => ['posts.update', $post->id],'data-parsley-validate'=>'','files'=>true, 'method' => 'PUT']) !!}
 		<div class="col-md-8">
 			{{ Form::label('title', 'Title:') }}
 			{{ Form::text('title', null, ["class" => 'form-control input-lg','required'=>'','maxlength'=>"255"]) }}
@@ -21,13 +31,28 @@
             {{ Form::select('category_id',$categories,$post->category_id, ["class" => 'form-control input-lg']) }} 
 
             {{ Form::label('tags', 'Tags:', ['class' => 'form-spacing-top']) }}
-            {{ Form::select('tags[]',$tags,null, ["class" => 'form-control input-lg js-example-basic-multiple',"multiple"=>"multiple"]) }}                          
+            {{ Form::select('tags[]',$tags,null, ["class" => 'form-control input-lg js-example-basic-multiple',"multiple"=>"multiple"]) }}     
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ Form::label('Current_featured_image', 'Current Featured Image Saved:', ['class' => 'form-spacing-top']) }}
+                    <br>                
+                    @if (strlen($post->image)>0)
+                        <img src="{{ asset('images/'.$post->image) }}" alt="{{ $post->title }} Featured image" class="edit-feature-image">
+                    @else
+                    <p>No Current Feature Image</p>
+                    @endif
+                </div>
+                <div class="col-md-6">
+                    {{ Form::label('featured_image', 'New Featured Image :', ['class' => 'form-spacing-top']) }}
+                    {{ Form::file('featured_image', ['class' => 'form-control']) }}
+                </div>
+            </div>
 
 			{{ Form::label('body', "Body:", ['class' => 'form-spacing-top']) }}
-			{{ Form::textarea('body', null, ['class' => 'form-control','required'=>'']) }}
+			{{ Form::textarea('body', null, ['class' => 'form-control']) }}
 		</div>
     <div class="col-md-4">
-        <div class="well">
             <dl class="dl-horizontal">
                 <dt>Created at:</dt>
                 <dd>{{   date('g:i a j M o',strtotime($post->created_at))   }}</dd>
@@ -45,7 +70,6 @@
                     {{ Form::submit('Save Changes',['class'=>"btn btn-success btn-block"]) }}                    
                 </div>
             </div>
-        </div>
     </div>
 </div>
 

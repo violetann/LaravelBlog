@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\Tag;
 use Session;
+use Purifier;
+use Image;
+
 
 class PostController extends Controller
 {
@@ -65,16 +69,27 @@ class PostController extends Controller
             'title'=>'required|max:255',
             'slug'=>'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'category_id'=>'required|numeric',
-            'body'=>'required'
+            'body'=>'required',
+            'featured_image'=>'image'
         ));
 
         //store in database
         $post = new Post;
 
         $post->title = $request->title;
-        $post->body = $request->body;
+        $post->body = Purifier::clean($request->body,'youtube');
         $post->slug = $request->slug;
         $post->category_id = $request->category_id;
+
+        // Save Image if user supplied one
+        if($request->hasFile('featured_image')){
+            $image = $request->file('featured_image');
+            $filename=time().'.'.$image->getClientOriginalExtension();
+            $location = public_path('images/'.$filename);
+            Image::make($image)->resize(800,800)->save($location);
+
+            $post->image=$filename;
+        }
 
         $post->save();
         
@@ -146,15 +161,31 @@ class PostController extends Controller
                 'title'=>'required|max:255',
                 'slug'=>($request->slug != $post->slug) ? 'required|alpha_dash|min:5|max:255|unique:posts,slug' : '',
                 'body'=>'required',
-                'category_id'=>'required|numeric'
+                'category_id'=>'required|numeric',
+                'featured_image'=>'image'
             ));
 
             
         //store in database        
         $post->title = $request->input('title');
-        $post->body = $request->input('body');
+        $post->body = Purifier::clean($request->input('body'),'youtube');
         $post->slug = $request->input('slug');
         $post->category_id = $request->input('category_id');
+
+        // Save Image if user supplied one
+        if($request->hasFile('featured_image')){
+            $image = $request->file('featured_image');
+            $filename=time().'.'.$image->getClientOriginalExtension();
+            $location = public_path('images/'.$filename);
+            Image::make($image)->resize(800,800)->save($location);
+            
+            $oldFilename=$post->image;
+
+            $post->image=$filename;
+            if(strlen($oldFilename)>0){
+                Storage::delete('public/images/'.$oldFilename);
+            }
+        }     
 
         $post->save();
         
@@ -182,7 +213,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $post->tags()->detach();
-        
+        Storage::delete('public/images/'.$post->image);
         $post->delete();
 
         Session::flash('success','This blog post was successfully deleted');
