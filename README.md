@@ -24,7 +24,14 @@ Functions:
 	Add a Post to a Categorie,
 
 	Sign up users,
+	added google captcha to signing up
 	Login/logout users,
 	Reset user password,
+	choice of roles for accounts: user or admin.
+		
+	Commenting on posts.
+	
+	custom emails.
+	
 
 
