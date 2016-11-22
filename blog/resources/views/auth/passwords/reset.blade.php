@@ -8,62 +8,37 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
                 <h1>Reset Password</h1>
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
-                    {{ csrf_field() }}
+                {!! Form::open(['url' => url('/password/reset/'), 'class' => 'form-signin', 'method' => 'post' ] ) !!}
 
-                    <input type="hidden" name="token" value="{{ $token }}">
+                {{ csrf_field() }}
 
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        <label for="email" class="col-md-4 control-label form-spacing-top">E-Mail Address</label>
+                <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="col-md-6">
-                            <input id="email" type="email" class="form-control form-spacing-top" name="email" value="{{ $email or old('email') }}" required autofocus>
+                <h2 class="form-signin-heading">Set New Password</h2>
 
-                            @if ($errors->has('email'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                {!! Form::email('email', null, [
+                    'class'                         => 'form-control',
+                    'placeholder'                   => 'Email address',
+                    'required',
+                    'id'                            => 'inputEmail',
+                    'data-parsley-required-message' => 'Email is required',
+                    'data-parsley-trigger'          => 'change focusout',
+                    'data-parsley-type'             => 'email',
+                    'autofocus'
+                ]) !!}
 
-                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                        <label for="password" class="col-md-4 control-label form-spacing-top">Password</label>
+                <label for="inputPassword" class="sr-only">Password</label>
+                {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password', 'required',  'id' => 'inputPassword' ]) !!}
 
-                        <div class="col-md-6">
-                            <input id="password" type="password" class="form-control form-spacing-top" name="password" required>
 
-                            @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
+                <label for="inputPasswordConfirmation" class="sr-only">Password Confirmation</label>
+                {!! Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Password confirmation', 'required',  'id' => 'inputPasswordConfirmation' ]) !!}
 
-                    <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                        <label for="password-confirm" class="col-md-4 control-label form-spacing-top">Confirm Password</label>
-                        <div class="col-md-6">
-                            <input id="password-confirm" type="password" class="form-control form-spacing-top" name="password_confirmation" required>
 
-                            @if ($errors->has('password_confirmation'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Change</button>
 
-                    <div class="form-group">
-                        <div class="col-md-4">
-                        </div>
-                        <div class="col-md-6">
-                            <button type="submit" class="btn btn-primary btn-lg form-spacing-top">
-                                Reset Password
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                {!! Form::close() !!}
         </div>
     </div>
 </div>

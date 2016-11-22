@@ -1,10 +1,10 @@
+
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddImagesToPost extends Migration
+class CreateRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddImagesToPost extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->string('image')->nullable()->after('slug');
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->text('name');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddImagesToPost extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('image');
-        });
+        Schema::drop('roles');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+Use Session;
 
 class RedirectIfAuthenticated
 {
@@ -18,7 +19,8 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/');
+            Session::flash('info','Please activate your email. <a href="'. route('authenticated.activation-resend') .'">Resend</a> activation email.'); 
+            return redirect()->route('index');
         }
 
         return $next($request);

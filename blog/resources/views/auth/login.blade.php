@@ -8,63 +8,67 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
                <h1>Login</h1>
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {{ csrf_field() }}
+        {!! Form::open(['url' => url('login'), 'class' => 'form-signin', 'data-parsley-validate' ] ) !!}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+        @include('includes.status')
+        {{  Form::label('email','Email:',['class'=>'form-spacing-top']) }}
+        {{ Form::email('email', null, [
+            'class'                         => 'form-control',
+            'placeholder'                   => 'Email address',
+            'required',
+            'id'                            => 'inputEmail',
+            'data-parsley-required-message' => 'Email is required',
+            'data-parsley-trigger'          => 'change focusout',
+            'data-parsley-type'             => 'email'
+        ]) }}
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+        {{  Form::label('password','Password:',['class'=>'form-spacing-top']) }}
+        {{ Form::password('password', [
+            'class'                         => 'form-control',
+            'placeholder'                   => 'Password',
+            'required',
+            'id'                            => 'inputPassword',
+            'data-parsley-required-message' => 'Password is required',
+            'data-parsley-trigger'          => 'change focusout',
+            'data-parsley-minlength'        => '6',
+            'data-parsley-maxlength'        => '20'
+        ]) }}
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+        <div style="height:15px;"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <fieldset class="form-group">
+                    {!! Form::checkbox('remember', 1, null, ['id' => 'remember-me']) !!}
+                    <label for="remember-me">Remember me</label>
+                </fieldset>
+            </div>
+        </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label  form-spacing-top">Password</label>
+        <button class="btn btn-lg btn-primary btn-block login-btn" type="submit">Sign in</button>
+        <p><a href="{{ url('password/reset') }}">Forgot password?</a></p>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control  form-spacing-top" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-6">
-                                <div class="checkbox">
-                                    <label class="form-spacing-top">
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-8">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    Login
-                                </button>
-                                <br>
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+        {!! Form::close() !!}
                 
         </div>
     </div>
 </div>
 @endsection
+
+@section('scripts')
+    {!!    Html::script('js/parsley.min.js')    !!}
+    {!!    Html::script('js/select2.full.min.js')    !!}
+
+    <script type="text/javascript">
+        window.ParsleyConfig = {
+            errorsWrapper: '<div></div>',
+            errorTemplate: '<span class="error-text"></span>',
+            classHandler: function (el) {
+                return el.$element.closest('input');
+            },
+            successClass: 'valid',
+            errorClass: 'invalid'
+        };
+    </script>
+
+@endsection
+

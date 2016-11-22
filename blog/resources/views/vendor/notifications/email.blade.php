@@ -25,8 +25,8 @@ $style = [
 
     /* Masthead ----------------------- */
 
-    'email-masthead' => 'padding: 25px 0; text-align: center;',
-    'email-masthead_name' => 'font-size: 16px; font-weight: bold; color: #2F3133; text-decoration: none; text-shadow: 0 1px 0 white;',
+    'email-masthead' => 'padding: 25px 0; text-align: center; background-color: #252621 ',
+    'email-masthead_name' => 'font-size: 20px; font-weight: bold; color: #ff; text-decoration: none; text-shadow: 0 1px 0 white;',
 
     'email-body' => 'width: 100%; margin: 0; padding: 0; border-top: 1px solid #EDEFF2; border-bottom: 1px solid #EDEFF2; background-color: #FFF;',
     'email-body_inner' => 'width: auto; max-width: 570px; margin: 0 auto; padding: 0;',
@@ -55,10 +55,11 @@ $style = [
                  text-align: center; text-decoration: none; -webkit-text-size-adjust: none;',
 
     'button--green' => 'background-color: #22BC66;',
-    'button--red' => 'background-color: #dc4d2f;',
-    'button--blue' => 'background-color: #3869D4;',
+    'button--red' => 'background-color: #a6b56b;',
+    'button--blue' => 'background-color: #d9534f;',
 ];
 ?>
+
 
 <?php $fontFamily = 'font-family: Arial, \'Helvetica Neue\', Helvetica, sans-serif;'; ?>
 
@@ -71,7 +72,7 @@ $style = [
                     <tr>
                         <td style="{{ $style['email-masthead'] }}">
                             <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ url('/') }}" target="_blank">
-                                {{ config('app.name') }}
+                                <img src="{{ asset('img/logo.png') }}" alt="{{ config('app.name') }}">
                             </a>
                         </td>
                     </tr>

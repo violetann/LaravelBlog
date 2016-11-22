@@ -10,10 +10,6 @@ use Session;
 
 class CommentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth', ['except' => 'store']);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -44,8 +40,6 @@ class CommentController extends Controller
     {
 
         $this->validate($request, array(
-            'name'=>'required|max:255|min:2',
-            'email'=>'required|email|max:255',
             'comment'=>'required|max:255|min:5',
         ));
 
@@ -53,8 +47,8 @@ class CommentController extends Controller
 
 
         $comment = new Comment();
-        $comment->name = $request->name;
-        $comment->email = $request->email;
+        $comment->name = auth()->user()->username;
+        $comment->email = auth()->user()->email;
         $comment->comment = $request->comment;
 
         $comment->approved = true;

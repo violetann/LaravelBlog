@@ -25,16 +25,22 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">Register</a></li>
                 @else
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->name }} <span class="caret"></span></a>
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="supportedContentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->username }}<span class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="supportedContentDropdown">
-                        <a class="dropdown-item" href="{{ route('posts.index') }}">Posts</a>
-                        <a class="dropdown-item" href="{{ route('categories.index') }}">Categories</a>
-                        <a class="dropdown-item" href="{{ route('tags.index') }}">Tags</a>
+                        @if (auth()->user()->hasRole('administrator'))
+                            <a class="dropdown-item" href="{{ route('posts.index') }}">Posts</a>
+                            <a class="dropdown-item" href="{{ route('categories.index') }}">Categories</a>
+                            <a class="dropdown-item" href="{{ route('tags.index') }}">Tags</a>
+                        @elseif (auth()->user()->hasRole('user'))
+                            <a class="dropdown-item" href="{{ route('index') }}">home</a>
+                        @endif
 
+                        <hr>
                         <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
                         </form>
+                        
 
                     </div>
                 @endif

@@ -35,26 +35,30 @@
 
     </div>
 </div>
-
-<div class="row">
-    <div class="col-md-10 offset-md-1">
-        {{  Form::open(['route'=>['comments.store',$post->id],'method'=>'POST'])  }}
-        <div class="col-md-12 ">
-            <div class="col-md-12">
-                 {{   Form::label('name','Name:')   }}
-                 {{   Form::text('name',null,['class'=>'form-control'])   }}
-            </div>
-            <div class="col-md-12">
-                 {{   Form::label('email','Email:')   }}
-                 {{   Form::text('email',null,['class'=>'form-control'])   }}
-            </div>
-            <div class="col-md-12">
-                 {{   Form::label('comment','Comment:')   }}
-                 {{   Form::textarea('comment',null,['class'=>'form-control'])   }}
-                 {{   Form::submit('Post Comment',['class'=>'btn btn-block btn-success btn-h1-spacing'])  }}
-            </div>
-        </div>        
-        {{  Form::close()  }}
+@if (!Auth::guest())
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            {{  Form::open(['route'=>['comments.store',$post->id],'method'=>'POST'])  }}
+            <div class="col-md-12 ">
+                <div class="col-md-12">
+                    {{   Form::label('comment','Comment:')   }}
+                    {{   Form::textarea('comment',null,['class'=>'form-control'])   }}
+                    {{   Form::submit('Post Comment',['class'=>'btn btn-block btn-success btn-h1-spacing'])  }}
+                </div>
+            </div>        
+            {{  Form::close()  }}
+        </div>
     </div>
-</div>
+@else
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <center>
+                <h5>Please login to join the discussion</h5>
+                <h6><a class="nav-link" href="{{ url('/register') }}">Click here to register</a> or <a class="nav-link" href="{{ url('/login') }}">Click here to login</a></h6>
+            </center
+        </div>
+    </div>
+
+@endif
+
 @endsection
